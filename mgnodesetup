@@ -136,26 +136,4 @@ EOF
 
 mongod -f /data/mongodb/cluster/shard3/mongod.conf
 
-#############mongs
-cat > /data/mongodb/cluster/mongos/mongod.conf <<EOF
-systemLog:
-  destination: file
-  logAppend: true
-  path: /data/mongodb/cluster/mongos/logs/mongod.log
-
-# how the process runs
-processManagement:
-  fork: true  # fork and run in background
-  pidFilePath: /data/mongodb/cluster/mongos/mongod.pid  # location of pidfile
-  timeZoneInfo: /usr/share/zoneinfo
-
-# network interfaces
-net:
-  port: 27017
-  bindIp: $ip
-
-#sharding:
-#  configDB: config/10.32.176.80:27018,10.32.176.81:27018,10.32.176.82:27018
-EOF
-
 
