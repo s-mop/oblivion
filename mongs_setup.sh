@@ -1,3 +1,4 @@
+export ip=$(ifconfig | grep inet | head -n 1 | awk -F" " '{print $2}')
 
 #############mongs conf and start with 3 ip parameters
 cat > /data/mongodb/cluster/mongos/mongod.conf <<EOF
