@@ -1,0 +1,156 @@
+sudo -s
+rpm -ivh https://repo.mongodb.org/yum/redhat/7/mongodb-org/testing/x86_64/RPMS/mongodb-org-server-5.0.7-0.1.rc1.el7.x86_64.rpm
+rpm -ivh https://repo.mongodb.org/yum/redhat/7/mongodb-org/testing/x86_64/RPMS/mongodb-org-mongos-5.0.7-0.1.rc1.el7.x86_64.rpm
+rpm -ivh https://repo.mongodb.org/yum/redhat/7/mongodb-org/testing/x86_64/RPMS/mongodb-org-shell-5.0.7-0.1.rc1.el7.x86_64.rpm
+
+export ip=$(ifconfig | grep inet | head -n 1 | awk -F" " '{print $2}')
+mkdir -p /data/mongodb/cluster/{config,mongos,shard1,shard2,shard3}/{data,logs}
+
+groupadd mongod
+useradd -g mongod mongod
+chown -R mongod:mongod /data/mongodb
+
+########################config server conf file
+cat > /data/mongodb/cluster/config/mongod.conf <<EOF
+systemLog:
+  destination: file
+  logAppend: true
+  path: /data/mongodb/cluster/config/logs/mongod.log
+
+# Where and how to store data.
+storage:
+  dbPath: /data/mongodb/cluster/config/data
+  journal:
+    enabled: true
+
+# how the process runs
+processManagement:
+  fork: true  # fork and run in background
+  pidFilePath: /data/mongodb/cluster/config/mongod.pid  # location of pidfile
+  timeZoneInfo: /usr/share/zoneinfo
+
+# network interfaces
+net:
+  port: 27018
+  bindIp: $ip
+
+sharding:
+  clusterRole: configsvr
+
+replication:
+  replSetName: config
+EOF
+
+mongod -f /data/mongodb/cluster/config/mongod.conf
+
+#######shard1 conf file
+cat > /data/mongodb/cluster/shard1/mongod.conf <<EOF
+systemLog:
+  destination: file
+  logAppend: true
+  path: /data/mongodb/cluster/shard1/logs/mongod.log
+
+# Where and how to store data.
+storage:
+  dbPath: /data/mongodb/cluster/shard1/data
+  journal:
+    enabled: true
+
+# how the process runs
+processManagement:
+  fork: true  # fork and run in background
+  pidFilePath: /data/mongodb/cluster/shard1/mongod.pid  # location of pidfile
+  timeZoneInfo: /usr/share/zoneinfo
+
+# network interfaces
+net:
+  port: 27019
+  bindIp: $ip
+
+sharding:
+    clusterRole: shardsvr
+    
+replication:
+    replSetName: shard1
+EOF
+
+mongod -f /data/mongodb/cluster/shard1/mongod.conf
+
+########shard2 conf file
+cat > /data/mongodb/cluster/shard2/mongod.conf <<EOF
+systemLog:
+  destination: file
+  logAppend: true
+  path: /data/mongodb/cluster/shard2/logs/mongod.log
+
+# Where and how to store data.
+storage:
+  dbPath: /data/mongodb/cluster/shard2/data
+  journal:
+    enabled: true
+
+# how the process runs
+processManagement:
+  fork: true  # fork and run in background
+  pidFilePath: /data/mongodb/cluster/shard2/mongod.pid  # location of pidfile
+  timeZoneInfo: /usr/share/zoneinfo
+
+# network interfaces
+net:
+  port: 27020
+  bindIp: $ip
+ 
+sharding:
+    clusterRole: shardsvr
+    
+replication:
+    replSetName: shard2
+EOF
+
+mongod -f /data/mongodb/cluster/shard2/mongod.conf
+
+#########shard 3
+cat > /data/mongodb/cluster/shard3/mongod.conf <<EOF
+systemLog:
+  destination: file
+  logAppend: true
+  path: /data/mongodb/cluster/shard3/logs/mongod.log
+
+# Where and how to store data.
+storage:
+  dbPath: /data/mongodb/cluster/shard3/data
+  journal:
+    enabled: true
+
+# how the process runs
+processManagement:
+  fork: true  # fork and run in background
+  pidFilePath: /data/mongodb/cluster/shard3/mongod.pid  # location of pidfile
+  timeZoneInfo: /usr/share/zoneinfo
+
+# network interfaces
+net:
+  port: 27021
+  bindIp: $ip
+
+sharding:
+    clusterRole: shardsvr
+    
+replication:
+    replSetName: shard3
+EOF
+
+mongod -f /data/mongodb/cluster/shard3/mongod.conf
+
+mongo 10.32.176.80 --port 27019
+rs.initiate(
+  {
+    _id: "shard1",
+    members: [
+      { _id : 0, host : "10.32.176.80:27019" },
+      { _id : 1, host : "10.32.176.81:27019" },
+      { _id : 2, host : "10.32.176.82:27019" }
+    ]
+  }
+)
+
