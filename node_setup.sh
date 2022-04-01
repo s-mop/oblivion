@@ -1,5 +1,3 @@
-sudo -s
-
 export ip=$(ifconfig | grep inet | head -n 1 | awk -F" " '{print $2}')
 mkdir -p /data/mongodb/cluster/{config,mongos,shard1,shard2,shard3}/{data,logs}
 
