@@ -1,8 +1,5 @@
-export ip1=
-export ip2=
-export ip3=
 
-#############mongs
+#############mongs conf and start with 3 ip parameters
 cat > /data/mongodb/cluster/mongos/mongod.conf <<EOF
 systemLog:
   destination: file
@@ -21,7 +18,7 @@ net:
   bindIp: $ip
 
 sharding:
-  configDB: config/$ip1:27018,$ip2:27018,$ip3:27018
+  configDB: config/$0:27018,$1:27018,$2:27018
 EOF
 
 mongos -f /data/mongodb/cluster/mongos/mongod.conf
