@@ -1,0 +1,5 @@
+db.createUser({
+  user: "pocadmin",
+  pwd: "784512",
+  roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+});
