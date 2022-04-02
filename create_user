@@ -3,3 +3,9 @@ db.createUser({
   pwd: "784512",
   roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
 });
+use poc
+db.createUser({
+  user: "pocclient",
+  pwd: "895623",
+  roles: [ { role: "readWrite", db: "poc" } ]
+});
