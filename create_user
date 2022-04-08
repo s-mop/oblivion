@@ -3,9 +3,21 @@ db.createUser({
   pwd: "784512",
   roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
 });
+db.auth("pocadmin","784512")
+db.createUser({
+  user: "pocroot",
+  pwd: "784512",
+  roles: [ { role: "root", db: "admin" } ]
+});
+db.auth("pocroot","784512")
 use poc
 db.createUser({
   user: "pocclient",
   pwd: "895623",
   roles: [ { role: "readWrite", db: "poc" } ]
+});
+db.createUser({
+  user: "pocmaster",
+  pwd: "895623",
+  roles: [ { role: "userAdminAnyDatabase", db: "poc" } ]
 });
