@@ -1,9 +1,9 @@
-sudo export ip=$(ifconfig | grep inet | head -n 1 | awk -F" " '{print $2}')
-sudo mkdir -p /data/mongodb/cluster/{config,mongos,shard1,shard2,shard3}/{data,logs}
+export ip=$(ifconfig | grep inet | head -n 1 | awk -F" " '{print $2}')
+mkdir -p /data/mongodb/cluster/{config,mongos,shard1,shard2,shard3}/{data,logs}
 
 
 ########################config server conf file
-sudo cat > /data/mongodb/cluster/config/mongod.conf <<EOF
+cat > /data/mongodb/cluster/config/mongod.conf <<EOF
 systemLog:
   destination: file
   logAppend: true
@@ -39,10 +39,10 @@ replication:
   #authorization: enabled
 EOF
 
-sudo mongod -f /data/mongodb/cluster/config/mongod.conf
+mongod -f /data/mongodb/cluster/config/mongod.conf
 
 #######shard1 conf file
-sudo cat > /data/mongodb/cluster/shard1/mongod.conf <<EOF
+cat > /data/mongodb/cluster/shard1/mongod.conf <<EOF
 systemLog:
   destination: file
   logAppend: true
@@ -78,10 +78,10 @@ replication:
   #authorization: enabled
 EOF
 
-sudo mongod -f /data/mongodb/cluster/shard1/mongod.conf
+mongod -f /data/mongodb/cluster/shard1/mongod.conf
 
 ########shard2 conf file
-sudo cat > /data/mongodb/cluster/shard2/mongod.conf <<EOF
+cat > /data/mongodb/cluster/shard2/mongod.conf <<EOF
 systemLog:
   destination: file
   logAppend: true
@@ -116,10 +116,10 @@ replication:
   #authorization: enabled
 EOF
 
-sudo mongod -f /data/mongodb/cluster/shard2/mongod.conf
+mongod -f /data/mongodb/cluster/shard2/mongod.conf
 
 #########shard 3
-sudo cat > /data/mongodb/cluster/shard3/mongod.conf <<EOF
+cat > /data/mongodb/cluster/shard3/mongod.conf <<EOF
 systemLog:
   destination: file
   logAppend: true
@@ -154,6 +154,6 @@ replication:
   #authorization: enabled
 EOF
 
-sudo mongod -f /data/mongodb/cluster/shard3/mongod.conf
+mongod -f /data/mongodb/cluster/shard3/mongod.conf
 
 
