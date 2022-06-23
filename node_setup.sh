@@ -1,9 +1,9 @@
-export ip=$(ifconfig | grep inet | head -n 1 | awk -F" " '{print $2}')
-mkdir -p /data/mongodb/cluster/{config,mongos,shard1,shard2,shard3}/{data,logs}
+sudo export ip=$(ifconfig | grep inet | head -n 1 | awk -F" " '{print $2}')
+sudo mkdir -p /data/mongodb/cluster/{config,mongos,shard1,shard2,shard3}/{data,logs}
 
 
 ########################config server conf file
-cat > /data/mongodb/cluster/config/mongod.conf <<EOF
+sudo cat > /data/mongodb/cluster/config/mongod.conf <<EOF
 systemLog:
   destination: file
   logAppend: true
@@ -34,15 +34,15 @@ replication:
 
 security:
   #KeyFile鉴权文件
-  keyFile: /data/mongodb/cluster/keyfile
+  #keyFile: /data/mongodb/cluster/keyfile
   #开启认证方式运行
-  authorization: enabled
+  #authorization: enabled
 EOF
 
-mongod -f /data/mongodb/cluster/config/mongod.conf
+sudo mongod -f /data/mongodb/cluster/config/mongod.conf
 
 #######shard1 conf file
-cat > /data/mongodb/cluster/shard1/mongod.conf <<EOF
+sudo cat > /data/mongodb/cluster/shard1/mongod.conf <<EOF
 systemLog:
   destination: file
   logAppend: true
@@ -73,15 +73,15 @@ replication:
     
 security:
   #KeyFile鉴权文件
-  keyFile: /data/mongodb/cluster/keyfile
+  #keyFile: /data/mongodb/cluster/keyfile
   #开启认证方式运行
-  authorization: enabled
+  #authorization: enabled
 EOF
 
-mongod -f /data/mongodb/cluster/shard1/mongod.conf
+sudo mongod -f /data/mongodb/cluster/shard1/mongod.conf
 
 ########shard2 conf file
-cat > /data/mongodb/cluster/shard2/mongod.conf <<EOF
+sudo cat > /data/mongodb/cluster/shard2/mongod.conf <<EOF
 systemLog:
   destination: file
   logAppend: true
@@ -116,10 +116,10 @@ security:
   authorization: enabled
 EOF
 
-mongod -f /data/mongodb/cluster/shard2/mongod.conf
+sudo mongod -f /data/mongodb/cluster/shard2/mongod.conf
 
 #########shard 3
-cat > /data/mongodb/cluster/shard3/mongod.conf <<EOF
+sudo cat > /data/mongodb/cluster/shard3/mongod.conf <<EOF
 systemLog:
   destination: file
   logAppend: true
@@ -149,11 +149,11 @@ replication:
     replSetName: shard3
 security:
   #KeyFile鉴权文件
-  keyFile: /data/mongodb/cluster/keyfile
+  #keyFile: /data/mongodb/cluster/keyfile
   #开启认证方式运行
-  authorization: enabled
+  #authorization: enabled
 EOF
 
-mongod -f /data/mongodb/cluster/shard3/mongod.conf
+sudo mongod -f /data/mongodb/cluster/shard3/mongod.conf
 
 
