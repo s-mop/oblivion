@@ -19,10 +19,10 @@ net:
   bindIp: $ip
 
 sharding:
-  configDB: config/172.31.77.178:27018,172.31.64.154:27018,172.31.68.172:27018
-security:
+  configDB: config/$0:27018,$1:27018,$2:27018
+#security:
   #KeyFile鉴权文件
-  keyFile: /data/mongodb/cluster/keyfile
+  #keyFile: /data/mongodb/cluster/keyfile
 EOF
 
 mongos -f /data/mongodb/cluster/mongos/mongod.conf
