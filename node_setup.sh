@@ -32,7 +32,7 @@ sharding:
 replication:
   replSetName: config
 
-security:
+#security:
   #KeyFile鉴权文件
   #keyFile: /data/mongodb/cluster/keyfile
   #开启认证方式运行
@@ -71,7 +71,7 @@ sharding:
 replication:
     replSetName: shard1
     
-security:
+#security:
   #KeyFile鉴权文件
   #keyFile: /data/mongodb/cluster/keyfile
   #开启认证方式运行
@@ -109,11 +109,11 @@ sharding:
     
 replication:
     replSetName: shard2
-security:
+#security:
   #KeyFile鉴权文件
-  keyFile: /data/mongodb/cluster/keyfile
+  #keyFile: /data/mongodb/cluster/keyfile
   #开启认证方式运行
-  authorization: enabled
+  #authorization: enabled
 EOF
 
 sudo mongod -f /data/mongodb/cluster/shard2/mongod.conf
@@ -147,7 +147,7 @@ sharding:
     
 replication:
     replSetName: shard3
-security:
+#security:
   #KeyFile鉴权文件
   #keyFile: /data/mongodb/cluster/keyfile
   #开启认证方式运行
