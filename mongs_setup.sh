@@ -19,7 +19,7 @@ net:
   bindIp: $ip
 
 sharding:
-  configDB: config/$0:27018,$1:27018,$2:27018
+  configDB: config/$1:27018,$2:27018,$3:27018
 #security:
   #KeyFile鉴权文件
   #keyFile: /data/mongodb/cluster/keyfile
