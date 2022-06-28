@@ -1,0 +1,23 @@
+
+mongos> db.order.getShardDistribution()
+
+Shard shard3 at shard3/172.17.54.2:27021,172.17.54.3:27021,172.17.54.6:27021
+ data : 1.2GiB docs : 8587536 chunks : 20
+ estimated data per chunk : 61.83MiB
+ estimated docs per chunk : 429376
+
+Shard shard2 at shard2/172.17.54.2:27020,172.17.54.3:27020,172.17.54.6:27020
+ data : 1.27GiB docs : 9042349 chunks : 20
+ estimated data per chunk : 65.1MiB
+ estimated docs per chunk : 452117
+
+Shard shard1 at shard1/172.17.54.2:27019,172.17.54.3:27019,172.17.54.6:27019
+ data : 2.46GiB docs : 11798043 chunks : 21
+ estimated data per chunk : 120.01MiB
+ estimated docs per chunk : 561811
+
+Totals
+ data : 4.94GiB docs : 29427928 chunks : 61
+ Shard shard3 contains 24.44% data, 29.18% docs in cluster, avg obj size on shard : 150B
+ Shard shard2 contains 25.73% data, 30.72% docs in cluster, avg obj size on shard : 151B
+ Shard shard1 contains 49.81% data, 40.09% docs in cluster, avg obj size on shard : 223B
