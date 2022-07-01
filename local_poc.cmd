@@ -14,5 +14,5 @@ sh.shardCollection("poc.order", {"userId": "hashed", "year": 1 })
 
 db.adminCommand({
   reshardCollection: "poc.order",
-  key: {"userId": "hashed", "year": 1 }
+  key: {"userId": "hashed"}
 })
