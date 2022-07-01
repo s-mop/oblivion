@@ -16,3 +16,14 @@ db.adminCommand({
   reshardCollection: "poc.order",
   key: {"userId": "hashed"}
 })
+
+PID=$(ps -ef | grep odspoc | grep -v grep | awk '{ print $2 }')
+if [ -z "$PID" ]
+then
+    echo Application is already stopped
+else
+    echo kill $PID
+    kill -9 $PID
+fi
+
+cluster角色admin：在cluser local user
